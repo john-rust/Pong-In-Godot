@@ -14,7 +14,6 @@ func _ready():
 	_previous_position = position
 	_new_direction = Vector2()
 	var n = String(name)
-	print(n)
 	_up = n + "_Up"
 	_down = n + "_Down"
 
@@ -28,6 +27,7 @@ func _on_area_entered(area):
 	if area.name == "Ball":
 		_hit_position = abs(area.position.y) - abs(position.y)
 		_new_direction.x = area.direction.x * -1
+		
 		if (
 			abs(_hit_position) <= 2.0 
 			and abs(_hit_position) >= 0.0
@@ -43,6 +43,5 @@ func _on_area_entered(area):
 		
 		if _hit_position < 0:
 			_new_direction.y = _new_direction.y * -1
-		else:
-			print("what")
+		
 		area.direction = _new_direction.normalized()

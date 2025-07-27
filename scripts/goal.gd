@@ -8,7 +8,6 @@ func _ready():
 	pong = get_parent()
 
 func _on_goal_area_entered(area):
-	#print("ping", area)
 	if area.name == "Ball":
 		var goal_name = self.name
 		if goal_name == "LeftGoal":

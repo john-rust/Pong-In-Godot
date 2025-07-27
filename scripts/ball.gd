@@ -16,7 +16,6 @@ func _process(delta):
 	_previous_position = position
 	_speed += delta * 2
 	position += _speed * delta * direction
-	#print(direction, _speed)
 
 func reset(kickoff_dir):
 	await get_tree().create_timer(_delay).timeout

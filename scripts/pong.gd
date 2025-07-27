@@ -7,13 +7,9 @@ var right_score = 0
 var load_ball = preload("res://scenes/ball.tscn")
 
 func _ready():
-	print("yo")
 	await get_tree().create_timer(5).timeout
-	print("should be ballin")
 	var ball = load_ball.instantiate()
 	add_child(ball)
-	print(ball, "balltime")
-	
 
 func update_score(player):
 	if player == 1:
