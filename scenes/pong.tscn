@@ -1,0 +1,134 @@
+[gd_scene load_steps=14 format=3 uid="uid://6nftjndbpy2p"]
+
+[ext_resource type="Script" path="res://scripts/pong.gd" id="1_58bho"]
+[ext_resource type="Texture2D" uid="uid://bcpb7p4afnxfn" path="res://assets/pong_paddle.png" id="3_1d04j"]
+[ext_resource type="Script" path="res://scripts/paddle.gd" id="3_mh7tq"]
+[ext_resource type="Texture2D" uid="uid://xfmdte1exsjo" path="res://assets/pong_net.png" id="4_jt0bj"]
+[ext_resource type="FontFile" uid="uid://gf7mnsdh2d0s" path="res://assets/PixelOperator8.ttf" id="5_ippi2"]
+[ext_resource type="Script" path="res://scripts/goal.gd" id="7_v1i8g"]
+[ext_resource type="PackedScene" uid="uid://4j8ejwp7aitg" path="res://scenes/ceiling_floor.tscn" id="8_xnpti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1012"]
+size = Vector2(3, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwfc5"]
+size = Vector2(3, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pbjo"]
+size = Vector2(20, 309)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_co5nl"]
+size = Vector2(20, 309)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qvtsq"]
+font = ExtResource("5_ippi2")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_lvfs6"]
+font = ExtResource("5_ippi2")
+
+[node name="Pong" type="Node2D"]
+script = ExtResource("1_58bho")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+rotation = 3.14159
+scale = Vector2(19.92, -1)
+zoom = Vector2(2.5, 2.5)
+
+[node name="Background" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = -205.0
+offset_top = -155.0
+offset_right = -165.0
+offset_bottom = -115.0
+scale = Vector2(10.32, 7.72)
+color = Color(0, 0, 0, 1)
+
+[node name="Net" type="Sprite2D" parent="."]
+scale = Vector2(0.999996, 0.999999)
+texture = ExtResource("4_jt0bj")
+
+[node name="LeftPaddle" type="Area2D" parent="."]
+position = Vector2(-150, 0)
+script = ExtResource("3_mh7tq")
+
+[node name="Sprite2D" type="Sprite2D" parent="LeftPaddle"]
+position = Vector2(0, 3.57628e-07)
+scale = Vector2(1, 1.5)
+texture = ExtResource("3_1d04j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftPaddle"]
+shape = SubResource("RectangleShape2D_j1012")
+
+[node name="RightPaddle" type="Area2D" parent="."]
+position = Vector2(150, 0)
+script = ExtResource("3_mh7tq")
+
+[node name="Sprite2D" type="Sprite2D" parent="RightPaddle"]
+position = Vector2(0, 3.57628e-07)
+scale = Vector2(1, 1.5)
+texture = ExtResource("3_1d04j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightPaddle"]
+shape = SubResource("RectangleShape2D_lwfc5")
+
+[node name="LeftGoal" type="Area2D" parent="."]
+position = Vector2(-215, 0)
+scale = Vector2(1, 4.16)
+script = ExtResource("7_v1i8g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftGoal"]
+position = Vector2(0, -0.5)
+scale = Vector2(1, 1.44)
+shape = SubResource("RectangleShape2D_7pbjo")
+
+[node name="RightGoal" type="Area2D" parent="."]
+position = Vector2(216, 0)
+scale = Vector2(1, 4.28)
+script = ExtResource("7_v1i8g")
+kickoff_dir = -1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightGoal"]
+position = Vector2(0, -0.5)
+scale = Vector2(1, 1.4)
+shape = SubResource("RectangleShape2D_co5nl")
+
+[node name="Ceiling" parent="." instance=ExtResource("8_xnpti")]
+position = Vector2(0, -164)
+
+[node name="Floor" parent="." instance=ExtResource("8_xnpti")]
+position = Vector2(0, 164)
+
+[node name="LeftPlayerScoreLabel" type="Label" parent="."]
+offset_left = -100.0
+offset_top = -140.0
+offset_right = -58.0
+offset_bottom = -92.0
+scale = Vector2(0.999999, 0.999999)
+text = "0"
+label_settings = SubResource("LabelSettings_qvtsq")
+horizontal_alignment = 1
+
+[node name="RightPlayerScoreLabel" type="Label" parent="."]
+offset_left = 59.0
+offset_top = -140.0
+offset_right = 101.0
+offset_bottom = -92.0
+scale = Vector2(0.999999, 0.999999)
+text = "0"
+label_settings = SubResource("LabelSettings_qvtsq")
+horizontal_alignment = 1
+
+[node name="WinLabel" type="Label" parent="."]
+offset_left = -106.0
+offset_top = -73.0
+offset_right = 20.0
+offset_bottom = -50.6667
+label_settings = SubResource("LabelSettings_lvfs6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="LeftPaddle" to="LeftPaddle" method="_on_area_entered"]
+[connection signal="area_entered" from="RightPaddle" to="RightPaddle" method="_on_area_entered"]
+[connection signal="area_entered" from="LeftGoal" to="LeftGoal" method="_on_goal_area_entered"]
+[connection signal="area_entered" from="RightGoal" to="RightGoal" method="_on_goal_area_entered"]

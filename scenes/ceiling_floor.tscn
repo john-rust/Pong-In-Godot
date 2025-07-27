@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://4j8ejwp7aitg"]
+
+[ext_resource type="Script" path="res://scripts/ceiling_floor.gd" id="1_pl1jp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrf6n"]
+size = Vector2(413, 20)
+
+[node name="Wall" type="Area2D"]
+script = ExtResource("1_pl1jp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_qrf6n")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

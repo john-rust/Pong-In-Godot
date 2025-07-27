@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://u3m6apskdxov"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_u0c2m"]
+[ext_resource type="LabelSettings" uid="uid://cbu2168lno3i" path="res://assets/label_settings.tres" id="2_8atow"]
+[ext_resource type="PackedScene" uid="uid://cwynyvewhhl3t" path="res://scenes/ball.tscn" id="3_g2dah"]
+[ext_resource type="PackedScene" uid="uid://bow71wx8jb107" path="res://scenes/wall.tscn" id="4_4iq0a"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_u0c2m")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(25.7262, 19.3105)
+color = Color(0, 0, 0, 1)
+
+[node name="TitleLabel" type="Label" parent="."]
+offset_left = 480.0
+offset_top = 224.0
+offset_right = 592.0
+offset_bottom = 256.0
+text = "pong"
+label_settings = ExtResource("2_8atow")
+
+[node name="StartGameLabel" type="Label" parent="."]
+offset_left = 376.0
+offset_top = 384.0
+offset_right = 632.0
+offset_bottom = 406.333
+text = "press space to start"
+label_settings = ExtResource("2_8atow")
+
+[node name="Ball" parent="." instance=ExtResource("3_g2dah")]
+position = Vector2(512, 320)
+
+[node name="Ceiling" parent="." instance=ExtResource("4_4iq0a")]
+position = Vector2(512, -8)
+scale = Vector2(5.12, 1)
+
+[node name="Floor" parent="." instance=ExtResource("4_4iq0a")]
+position = Vector2(512, 776)
+scale = Vector2(5.12, 1)
+
+[node name="LeftWall" parent="." instance=ExtResource("4_4iq0a")]
+position = Vector2(-8, 384)
+rotation = 1.57079
+scale = Vector2(4.08, 1)
+_is_wall = true
+
+[node name="RightWall" parent="." instance=ExtResource("4_4iq0a")]
+position = Vector2(1032, 384)
+rotation = 1.57079
+scale = Vector2(4.08, 1)
+_is_wall = true
+
+[connection signal="area_entered" from="Ceiling" to="Ceiling" method="_on_area_entered"]
+[connection signal="area_entered" from="Floor" to="Floor" method="_on_area_entered"]
+[connection signal="area_entered" from="LeftWall" to="LeftWall" method="_on_area_entered"]
+[connection signal="area_entered" from="RightWall" to="RightWall" method="_on_area_entered"]
